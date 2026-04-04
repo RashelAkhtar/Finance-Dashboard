@@ -1,0 +1,114 @@
+/* Header.css */
+/* ── App header ───────────────────────────────────────── */
+.app-header {
+  background: var(--white);
+  border-bottom: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  height: 62px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  backdrop-filter: blur(12px);
+  animation: fadeIn .4s var(--ease) both;
+}
+
+.app-header-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-header-logo {
+  font-family: var(--font-sans);
+  font-size: .92rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -.01em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Logo mark — a small geometric badge */
+.app-header-logo::before {
+  content: '◈';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: var(--ink);
+  color: var(--accent);
+  border-radius: 8px;
+  font-size: .9rem;
+  line-height: 1;
+}
+
+.app-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Theme toggle */
+.app-header-toggle {
+  font-family: var(--font-sans);
+  font-size: .76rem;
+  font-weight: 500;
+  padding: 7px 14px;
+  background: var(--mist);
+  border: var(--border);
+  border-radius: 8px;
+  color: var(--ink-3);
+  cursor: pointer;
+  letter-spacing: .03em;
+  transition: all var(--t) var(--ease);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.app-header-toggle::before {
+  content: '◐';
+  font-size: .8rem;
+}
+
+.app-header-toggle:hover {
+  background: var(--mist-2);
+  color: var(--ink);
+  border-color: var(--mist-3);
+}
+
+/* Primary CTA in header */
+.app-header-primary {
+  font-family: var(--font-sans);
+  font-size: .82rem;
+  font-weight: 600;
+  padding: 8px 20px;
+  background: var(--ink);
+  color: var(--accent);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: .02em;
+  transition: background var(--t), transform var(--t), box-shadow var(--t);
+}
+
+.app-header-primary:hover {
+  background: var(--ink-2);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(15,17,23,.16);
+}
+
+/* Divider pipe between slots */
+.app-header-actions > *:not(:first-child):not(:last-child) {
+  position: relative;
+}
+
+@media (max-width: 640px) {
+  .app-header { padding: 0 20px; }
+  .app-header-toggle span { display: none; }
+}
