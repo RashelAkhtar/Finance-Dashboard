@@ -1,3 +1,5 @@
+import {useNavigate} from "react-router-dom"
+
 import "./Header.css";
 
 export default function Header({
@@ -7,10 +9,12 @@ export default function Header({
   onPrimaryAction,
   rightSlot,
 }) {
+  const navigate = useNavigate();
+
   return (
     <header className="app-header">
       <div className="app-header-logo-wrap">
-        <span className="app-header-logo">FinForge</span>
+        <span className="app-header-logo" onClick={() => navigate("/")}>Zorvyn</span>
       </div>
 
       <div className="app-header-actions">

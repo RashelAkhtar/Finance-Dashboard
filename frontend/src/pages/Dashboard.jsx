@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import TransactionForm from "../components/transaction/TransactionForm";
 import TransactionTable from "../components/transaction/TransactionTable";
 import SummarySection from "../components/summary/SummarySection";
 import SpendingChart from "../components/chart/SpendingChart";
 import MonthlyChart from "../components/chart/MonthlyChart";
 import Header from "../components/layout/Header";
+
 import "../styles/Dashboard.css";
 
 function loadTransactions() {
@@ -22,7 +24,9 @@ export default function Dashboard() {
   const [transaction, setTransaction] = useState(loadTransactions);
   const [editingTx, setEditingTx] = useState(null);
   const [role, setRole] = useState(() => localStorage.getItem("userRole"));
-  const [theme, setTheme] = useState(() => localStorage.getItem("theme") ?? "light");
+  const [theme, setTheme] = useState(
+    () => localStorage.getItem("theme") ?? "light",
+  );
 
   useEffect(() => {
     if (!role) navigate("/", { replace: true });
@@ -48,7 +52,7 @@ export default function Dashboard() {
 
   const updateTransaction = (updatedTx) => {
     setTransaction((prev) =>
-      prev.map((tx) => (tx.id === updatedTx.id ? updatedTx : tx))
+      prev.map((tx) => (tx.id === updatedTx.id ? updatedTx : tx)),
     );
     setEditingTx(null);
   };
@@ -60,7 +64,9 @@ export default function Dashboard() {
       {/* ── Header ── */}
       <Header
         theme={theme}
-        onToggleTheme={() => setTheme((prev) => (prev === "light" ? "dark" : "light"))}
+        onToggleTheme={() =>
+          setTheme((prev) => (prev === "light" ? "dark" : "light"))
+        }
         rightSlot={
           <div className="role-switch">
             <label htmlFor="roleSelect">Role</label>
@@ -87,19 +93,20 @@ export default function Dashboard() {
           <p className="dash-kicker">Finance command center</p>
           <h1>Welcome back.</h1>
           <p className="dash-sub">
-            Keep cashflow clean, organized, and future-ready with quick insights.
+            Keep cashflow clean, organized, and future-ready with quick
+            insights.
           </p>
         </div>
       </header>
 
-      {/* ── Summary + Monthly chart ── */}
+      {/* ── Summary + Spending chart ── */}
       <div className="dash-grid">
         <SummarySection transactions={transaction} />
-        <MonthlyChart transactions={transaction} />
+        <SpendingChart transactions={transaction} />
       </div>
 
-      {/* ── Spending chart ── */}
-      <SpendingChart transactions={transaction} />
+      {/* ── Monthly chart ── */}
+      <MonthlyChart transactions={transaction} />
 
       {/* ── Transaction form (admin only) ── */}
       {role === "admin" && (
