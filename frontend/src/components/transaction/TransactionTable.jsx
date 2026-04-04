@@ -4,12 +4,12 @@ import "./TransactionTable.css";
 export default function TransactionTable({ transactions, onEdit, onDelete }) {
   const [sortBy, setSortBy] = useState("date"); // Default sorting by Date
   const [sortOrder, setSortOrder] = useState("asc"); // Default ascending order
+  const [categoryFilter, setCategoryFilter] = useState("all");
 
   const sortOptions = [
     { key: "date", label: "Date", icon: "📅" },
     { key: "amount", label: "Amount", icon: "💰" },
     { key: "type", label: "Type", icon: "🏷️" },
-    { key: "category", label: "Category", icon: "📂" },
   ];
 
   // Function to handle sorting
@@ -38,8 +38,17 @@ export default function TransactionTable({ transactions, onEdit, onDelete }) {
     return String(raw).toLowerCase();
   };
 
+  const categories = Array.from(
+    new Set(transactions.map((tx) => tx.category).filter(Boolean)),
+  ).sort((a, b) => a.localeCompare(b));
+
+  const filteredData =
+    categoryFilter === "all"
+      ? transactions
+      : transactions.filter((tx) => tx.category === categoryFilter);
+
   // Sorting logic based on sortBy and sortOrder
-  const sortedData = [...transactions].sort((a, b) => {
+  const sortedData = [...filteredData].sort((a, b) => {
     const aValue = normalizeValue(a, sortBy);
     const bValue = normalizeValue(b, sortBy);
     if (aValue < bValue) {
@@ -55,8 +64,9 @@ export default function TransactionTable({ transactions, onEdit, onDelete }) {
   const resetSorting = () => {
     setSortBy("date");
     setSortOrder("asc");
-  }
-  
+    setCategoryFilter("all");
+  };
+
   if (!transactions.length) {
     return (
       <section className="tx-table-card empty">
@@ -80,7 +90,6 @@ export default function TransactionTable({ transactions, onEdit, onDelete }) {
         <span className="tx-count">{transactions.length} records</span>
       </div>
 
-            {/* Improved Sorting Controls */}
       <div className="sorting-controls">
         <div className="sorting-group">
           <span className="sort-label">Sort by:</span>
@@ -104,18 +113,43 @@ export default function TransactionTable({ transactions, onEdit, onDelete }) {
         </div>
 
         <div className="sorting-actions">
-          <button onClick={resetSorting} className="reset-btn" title="Reset to default">
+          {/* Filter Category */}
+          <div className="filter-group">
+            <label className="filter-label" htmlFor="categoryFilter">
+              📋 Category:
+            </label>
+            <select
+              id="categoryFilter"
+              className="filter-select"
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+            >
+              <option value="all">All</option>
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Resert sorting and filtering */}
+          <button
+            onClick={resetSorting}
+            className="reset-btn"
+            title="Reset to default"
+          >
             🔄 Reset
           </button>
-          
         </div>
       </div>
 
       {/* Active sort indicator */}
       <div className="active-sort-info">
         <span className="info-badge">
-          Currently sorted by: <strong>{sortBy}</strong> 
-          ({sortOrder === "asc" ? "Ascending" : "Descending"})
+          Currently sorted by: <strong>{sortBy}</strong>(
+          {sortOrder === "asc" ? "Ascending" : "Descending"}) | Category:{" "}
+          <strong>{categoryFilter === "all" ? "All" : categoryFilter}</strong>
         </span>
       </div>
 
@@ -123,21 +157,11 @@ export default function TransactionTable({ transactions, onEdit, onDelete }) {
         <table className="tx-table">
           <thead>
             <tr>
-              <th>
-                Date
-              </th>
-              <th>
-                Amount
-              </th>
-              <th>
-                Category
-              </th>
-              <th>
-                Type
-              </th>
-              <th>
-                Description
-              </th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Category</th>
+              <th>Type</th>
+              <th>Description</th>
               {showActions && <th>Actions</th>}
             </tr>
           </thead>
@@ -156,7 +180,11 @@ export default function TransactionTable({ transactions, onEdit, onDelete }) {
                   <td>
                     <div className="table-actions">
                       {onEdit && (
-                        <button type="button" className="action-btn" onClick={() => onEdit(tx)}>
+                        <button
+                          type="button"
+                          className="action-btn"
+                          onClick={() => onEdit(tx)}
+                        >
                           Edit
                         </button>
                       )}

@@ -219,6 +219,7 @@
   display: flex;
   gap: 0.75rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .reset-btn {
@@ -234,6 +235,41 @@
 
 .reset-btn:hover {
   background: #5a6268;
+}
+
+.reset-btn.reset-btn-secondary {
+  background: #adb5bd;
+  color: #1f2937;
+}
+
+.reset-btn.reset-btn-secondary:hover {
+  background: #9aa3ad;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-weight: 600;
+  color: #495057;
+  font-size: 0.875rem;
+}
+
+.filter-select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.filter-select:hover {
+  border-color: #adb5bd;
 }
 
 .quick-filter {
