@@ -9,7 +9,7 @@ The project is designed as a **frontend-focused demo application** showcasing UI
 
 # Live Demo
 
-[https://finance-dashboard-seven-wine.vercel.app]
+https://finance-dashboard-seven-wine.vercel.app
 
 ---
 
@@ -102,30 +102,59 @@ Styling
 
 ---
 
+### Routing & Performance
+
+The application uses **React Router** for client-side navigation.
+
+To improve performance, pages are **lazy loaded using React.lazy and Suspense**.
+This ensures that large components like the dashboard are only loaded when needed, reducing the initial bundle size and improving page load performance.
+
+A fallback loading UI is displayed while components are being loaded.
+
+Routes implemented:
+
+* `/` — Home page
+* `/dashboard` — Main finance dashboard
+* `*` — Custom **Not Found (404)** page for invalid routes
+
+---
+
 # Project Structure
 
 ```
 frontend/
   src/
     components/
-      SummaryCards.jsx
-      TransactionTable.jsx
-      TransactionForm.jsx
-      Charts.jsx
-      Insights.jsx
-
-    hooks/
-      useTransactions.js
-
-    utils/
-      storage.js
-
+      chart/
+        MonthlyChart.jsx
+        MonthlyChart.css
+        SpendingChart.jsx
+        SpendingChart.css
+      insights/
+        InsightsSection.jsx
+        InsightsSection.jsx
+      layout/
+        Header.jsx
+        Header.css
+      summary/
+        SummaryCard.jsx
+        SummaryCard.css
+        SummarySection.jsx
+        SummarySection.css
+      transaction/
+        TransactionForm.jsx
+        TransactionForm.css
+        TransactionTable.jsx
+        TransactionTable.css    
     pages/
       Dashboard.jsx
-
+      HomePage.jsx
+      NotFound.jsx
     styles/
-      globals.css
-
+      App.css
+      Dashboard.css
+      HomePage.css
+      NotFound.css
     App.jsx
     main.jsx
 ```
@@ -137,8 +166,8 @@ frontend/
 ## 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/finance-dashboard.git
-cd finance-dashboard
+git clone https://github.com/RashelAkhtar/Finance-Dashboard.git
+cd Finance-Dashboard
 ```
 
 ## 2. Install Dependencies

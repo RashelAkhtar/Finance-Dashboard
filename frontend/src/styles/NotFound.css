@@ -1,0 +1,120 @@
+.not-found {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px 20px;
+  background: linear-gradient(
+    180deg,
+    var(--surface) 0%,
+    var(--mist) 55%,
+    var(--mist-2) 100%
+  );
+  color: var(--ink);
+}
+
+.not-found__card {
+  width: min(520px, 100%);
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+  border: var(--border-soft);
+  text-align: center;
+  animation: fadeUp 0.6s var(--ease) both;
+}
+
+.not-found__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-dk);
+  background: var(--accent-bg);
+  border: 1px solid rgba(184, 242, 65, 0.35);
+  padding: 5px 12px;
+  border-radius: 99px;
+}
+
+.not-found__eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-dk);
+  animation: dotBlink 1.8s ease infinite;
+}
+
+.not-found__title {
+  margin: 0 0 14px;
+  font-family: var(--font-serif);
+  font-size: clamp(2.1rem, 4vw, 2.8rem);
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.not-found__text {
+  margin: 0 0 24px;
+  font-size: 0.98rem;
+  color: var(--ink-3);
+  line-height: 1.65;
+}
+
+.not-found__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.not-found__button,
+.not-found__ghost {
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform var(--t) var(--ease), box-shadow var(--t) var(--ease), background var(--t) var(--ease);
+}
+
+.not-found__button {
+  background: var(--primary-bg);
+  color: var(--primary-text);
+  box-shadow: 0 10px 22px rgba(15, 17, 23, 0.2);
+}
+
+.not-found__ghost {
+  background: transparent;
+  color: var(--ink-3);
+  border: var(--border);
+}
+
+.not-found__button:hover,
+.not-found__ghost:hover {
+  transform: translateY(-2px);
+}
+
+.not-found__button:hover {
+  background: var(--primary-bg-hover);
+}
+
+.not-found__ghost:hover {
+  background: var(--mist);
+  color: var(--ink);
+  border-color: var(--mist-3);
+}
+
+.not-found__button:focus-visible,
+.not-found__ghost:focus-visible {
+  outline: 2px solid rgba(142, 201, 27, 0.4);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .not-found__card,
+  .not-found__eyebrow::before {
+    animation: none;
+  }
+}
