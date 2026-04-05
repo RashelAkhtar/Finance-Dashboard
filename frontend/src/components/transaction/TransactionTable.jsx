@@ -52,6 +52,13 @@ export default function TransactionTable({ transactions, onEdit, onDelete }) {
     return sortOrder === "asc" ? "Ascending" : "Descending";
   };
 
+  const formatDate = (value) => {
+    if (!value) return "";
+    const time = Date.parse(value);
+    if (Number.isNaN(time)) return value;
+    return new Date(time).toLocaleDateString("en-GB");
+  };
+
   const categories = Array.from(
     new Set(transactions.map((tx) => tx.category).filter(Boolean)),
   ).sort((a, b) => a.localeCompare(b));
@@ -272,7 +279,7 @@ export default function TransactionTable({ transactions, onEdit, onDelete }) {
           <tbody>
             {sortedData.map((tx) => (
               <tr key={tx.id}>
-                <td>{tx.date}</td>
+                <td>{formatDate(tx.date)}</td>
                 <td>₹{tx.amount}</td>
                 <td>{tx.category}</td>
                 <td>
