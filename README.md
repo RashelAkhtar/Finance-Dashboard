@@ -9,7 +9,7 @@ The project is designed as a **frontend-focused demo application** showcasing UI
 
 # Live Demo
 
-[https://finance-dashboard-seven-wine.vercel.app
+[https://finance-dashboard-seven-wine.vercel.app]
 
 ---
 
