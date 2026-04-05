@@ -1,7 +1,7 @@
 .tx-form-card {
-  background: var(--white);
+  background: var(--surface);
   border-radius: var(--radius-lg);
-  border: var(--border);
+  border: var(--border-soft);
   padding: 28px 32px;
   box-shadow: var(--shadow-sm);
   display: grid;
@@ -26,20 +26,20 @@
 
 .tx-form-head h3 {
   margin: 0;
-  font-size: 1.1rem;
-  font-family:'Arial, Helvetica, sans-serif';
+  font-size: 1.05rem;
+  font-family: var(--font-sans);
   line-height: 1.3;
   color: var(--ink);
 }
 
 .tx-chip {
-  padding: 6px 10px;
+  padding: 6px 12px;
   border-radius: 999px;
   background: var(--accent-bg);
   color: var(--accent-dk);
   border: 1px solid rgba(184, 242, 65, 0.35);
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.7rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -64,8 +64,8 @@
 .tx-form select {
   padding: 10px 14px;
   border-radius: 9px;
-  border: var(--border);
-  background: var(--mist);
+  border: var(--border-soft);
+  background: var(--surface-2);
   font-size: 0.9rem;
   color: var(--ink);
   font-family: var(--font-sans);
@@ -77,7 +77,7 @@
   outline: none;
   border-color: var(--accent-dk);
   box-shadow: 0 0 0 3px rgba(142, 201, 27, 0.15);
-  background: var(--white);
+  background: var(--surface);
 }
 
 .span-two {
@@ -98,20 +98,20 @@
   padding: 10px 18px;
   font-weight: 600;
   cursor: pointer;
-  border: var(--border);
+  border: var(--border-soft);
   font-family: var(--font-sans);
   transition: all var(--t);
 }
 
 .tx-actions .primary-btn {
-  background: var(--ink);
-  color: var(--accent);
+  background: var(--primary-bg);
+  color: var(--primary-text);
   border-color: transparent;
   box-shadow: var(--shadow-sm);
 }
 
 .tx-actions .primary-btn:hover {
-  background: var(--ink-2);
+  background: var(--primary-bg-hover);
   transform: translateY(-1px);
 }
 
@@ -121,7 +121,7 @@
 }
 
 .tx-actions .ghost-btn:hover {
-  background: var(--mist);
+  background: var(--surface-2);
   color: var(--ink);
 }
 

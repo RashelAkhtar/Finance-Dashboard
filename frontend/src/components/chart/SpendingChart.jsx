@@ -15,6 +15,10 @@ ChartJS.register(
 );
 
 export default function SpendingChart({ transactions }) {
+  const rootStyles = typeof window !== "undefined"
+    ? getComputedStyle(document.documentElement)
+    : null;
+  const textColor = rootStyles?.getPropertyValue("--ink-2")?.trim() || "#1e2230";
 
   const categoryTotals = {};
 
@@ -58,6 +62,7 @@ export default function SpendingChart({ transactions }) {
     plugins: {
       legend: {
         position: "bottom",
+        labels: { color: textColor },
       },
     },
   };

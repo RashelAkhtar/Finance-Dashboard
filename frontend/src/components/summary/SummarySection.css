@@ -1,12 +1,11 @@
 .summary-section {
-  background: var(--dash-card);
-  border-radius: 0;
-  border: 3px solid var(--dash-outline);
-  padding: 16px;
-  box-shadow: var(--dash-shadow);
-  image-rendering: pixelated;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: var(--border-soft);
+  padding: 24px 28px;
+  box-shadow: var(--shadow-sm);
   display: grid;
-  gap: 14px;
+  gap: 16px;
 }
 
 .summary-header {
@@ -19,26 +18,30 @@
 
 .summary-kicker {
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   font-size: 0.7rem;
-  color: var(--dash-accent-2);
+  color: var(--accent-dk);
   margin: 0 0 6px;
 }
 
 .summary-header h2 {
   margin: 0;
-  font-size: 1rem;
-  font-family: "Inter", "Segoe UI", sans-serif;
-  line-height: 1.5;
+  font-size: 1.05rem;
+  font-family: var(--font-sans);
+  line-height: 1.4;
+  color: var(--ink);
 }
 
 .summary-pill {
-  padding: 6px 10px;
-  border-radius: 0;
-  background: var(--dash-accent-soft);
-  color: var(--dash-accent);
-  font-size: 1rem;
-  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--ink-3);
+  border: var(--border-soft);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .summary-grid {

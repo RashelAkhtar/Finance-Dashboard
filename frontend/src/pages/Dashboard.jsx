@@ -6,6 +6,7 @@ import TransactionTable from "../components/transaction/TransactionTable";
 import SummarySection from "../components/summary/SummarySection";
 import SpendingChart from "../components/chart/SpendingChart";
 import MonthlyChart from "../components/chart/MonthlyChart";
+import InsightsSection from "../components/insights/InsightsSection";
 import Header from "../components/layout/Header";
 
 import "../styles/Dashboard.css";
@@ -105,8 +106,11 @@ export default function Dashboard() {
         <SpendingChart transactions={transaction} />
       </div>
 
-      {/* ── Monthly chart ── */}
-      <MonthlyChart transactions={transaction} />
+      {/* ── Monthly chart + Insights ── */}
+      <div className="dash-grid">
+        <MonthlyChart transactions={transaction} />
+        <InsightsSection transactions={transaction} />
+      </div>
 
       {/* ── Transaction form (admin only) ── */}
       {role === "admin" && (

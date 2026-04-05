@@ -1,15 +1,17 @@
 .summary-card {
-  border-radius: 0;
-  padding: 14px;
-  border: 3px solid var(--dash-outline);
-  background: rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  padding: 16px;
+  border: var(--border-soft);
+  background: var(--surface-2);
   display: grid;
   gap: 8px;
-  transition: none;
+  transition: transform var(--t), box-shadow var(--t), border-color var(--t);
 }
 
 .summary-card:hover {
-  border-color: rgba(37, 99, 235, 0.35);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
 }
 
 .summary-card-top {
@@ -20,33 +22,37 @@
 }
 
 .summary-badge {
-  padding: 5px 8px;
-  border-radius: 0;
+  padding: 5px 10px;
+  border-radius: 999px;
   font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
-  background: rgba(37, 99, 235, 0.14);
-  color: var(--dash-accent);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--info-bg);
+  color: var(--info);
 }
 
 .summary-title {
   margin: 0;
-  font-size: 0.9rem;
-  color: var(--dash-muted);
+  font-size: 0.86rem;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .summary-value {
   margin: 0;
-  font-size: 1.45rem;
+  font-size: 1.5rem;
   font-weight: 700;
+  color: var(--ink);
 }
 
 .summary-card.expense .summary-badge {
-  background: rgba(249, 115, 22, 0.16);
-  color: #c2410c;
+  background: var(--warn-bg);
+  color: var(--warn);
 }
 
 .summary-card.balance .summary-badge {
-  background: rgba(34, 197, 94, 0.16);
-  color: #15803d;
+  background: var(--success-bg);
+  color: var(--success);
 }

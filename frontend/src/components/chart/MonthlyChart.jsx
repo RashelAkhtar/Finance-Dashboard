@@ -28,6 +28,12 @@ const MONTH_LABELS = [
 ];
 
 export default function MonthlyChart({ transactions }) {
+  const rootStyles = typeof window !== "undefined"
+    ? getComputedStyle(document.documentElement)
+    : null;
+  const textColor = rootStyles?.getPropertyValue("--ink-2")?.trim() || "#1e2230";
+  const gridColor = rootStyles?.getPropertyValue("--mist-3")?.trim() || "#c8cede";
+
   const income = Array(12).fill(0);
   const expense = Array(12).fill(0);
 
@@ -65,11 +71,14 @@ export default function MonthlyChart({ transactions }) {
   const options = {
     responsive: true,
     plugins: {
-      legend: { position: "bottom" },
+      legend: { position: "bottom", labels: { color: textColor } },
     },
     scales: {
-      x: { grid: { display: false } },
-      y: { ticks: { callback: (value) => `₹${value}` } },
+      x: { grid: { display: false }, ticks: { color: textColor } },
+      y: {
+        grid: { color: gridColor },
+        ticks: { color: textColor, callback: (value) => `₹${value}` },
+      },
     },
   };
 

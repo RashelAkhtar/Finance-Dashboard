@@ -1,7 +1,7 @@
 .tx-table-card {
-  background: var(--white);
+  background: var(--surface);
   border-radius: var(--radius-lg);
-  border: var(--border);
+  border: var(--border-soft);
   padding: 24px 28px;
   box-shadow: var(--shadow-sm);
   display: grid;
@@ -23,8 +23,8 @@
 
 .tx-table-head h3 {
   margin: 0;
-  font-size: 1.15rem;
-  font-family:'Arial, Helvetica, sans-serif';
+  font-size: 1.1rem;
+  font-family: var(--font-sans);
   line-height: 1.3;
   color: var(--ink);
 }
@@ -40,9 +40,9 @@
 .tx-count {
   padding: 4px 12px;
   border-radius: 999px;
-  background: var(--mist);
+  background: var(--surface-2);
   color: var(--ink-3);
-  border: var(--border);
+  border: var(--border-soft);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -61,7 +61,7 @@
 }
 
 .tx-table thead {
-  background: var(--mist);
+  background: var(--surface-2);
 }
 
 .tx-table th,
@@ -79,43 +79,13 @@
   color: var(--ink-3);
 }
 
-.tx-sort-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--ink-3);
-  font: inherit;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 4px 6px;
-  cursor: pointer;
-}
-
-.tx-sort-btn:hover {
-  border-color: var(--mist-3);
-  color: var(--ink);
-}
-
-.tx-sort-btn.is-active {
-  border-color: var(--accent-dk);
-  color: var(--accent-dk);
-}
-
-.tx-sort-indicator {
-  font-size: 0.8rem;
-  color: inherit;
-}
-
 .tx-table tbody tr {
-  border-top: var(--border);
+  border-top: var(--border-soft);
   transition: background var(--t);
 }
 
 .tx-table tbody tr:hover {
-  background: var(--mist);
+  background: var(--surface-2);
 }
 
 .tx-type {
@@ -124,14 +94,14 @@
   font-size: 0.7rem;
   font-weight: 600;
   text-transform: capitalize;
-  background: var(--mist-2);
+  background: var(--surface-3);
   color: var(--ink-3);
   letter-spacing: 0.04em;
 }
 
 .tx-type.income {
-  background: rgba(0, 196, 140, 0.12);
-  color: var(--green);
+  background: var(--success-bg);
+  color: var(--success);
 }
 
 .table-actions {
@@ -140,7 +110,7 @@
 }
 
 .action-btn {
-  border: var(--border);
+  border: var(--border-soft);
   background: transparent;
   color: var(--ink-3);
   padding: 6px 12px;
@@ -153,9 +123,9 @@
 }
 
 .action-btn:hover {
-  background: var(--mist-2);
+  background: var(--surface-2);
   color: var(--ink);
-  border-color: var(--mist-3);
+  border-color: var(--border-strong);
 }
 
 .action-btn.danger {
@@ -175,9 +145,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background: var(--mist);
+  background: var(--surface-2);
   border-radius: var(--radius);
-  border: var(--border);
+  border: var(--border-soft);
   margin-bottom: 0.5rem;
   flex-wrap: wrap;
   gap: 1rem;
@@ -209,8 +179,8 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: var(--white);
-  border: var(--border);
+  background: var(--surface);
+  border: var(--border-soft);
   border-radius: 9px;
   cursor: pointer;
   font-size: 0.8rem;
@@ -220,8 +190,8 @@
 }
 
 .sort-btn:hover {
-  background: var(--mist-2);
-  border-color: var(--mist-3);
+  background: var(--surface-3);
+  border-color: var(--border-strong);
   color: var(--ink);
 }
 
@@ -249,8 +219,8 @@
 
 .reset-btn {
   padding: 0.5rem 1rem;
-  background: var(--ink);
-  color: var(--accent);
+  background: var(--primary-bg);
+  color: var(--primary-text);
   border: none;
   border-radius: 9px;
   cursor: pointer;
@@ -261,19 +231,8 @@
 }
 
 .reset-btn:hover {
-  background: var(--ink-2);
+  background: var(--primary-bg-hover);
   transform: translateY(-1px);
-}
-
-.reset-btn.reset-btn-secondary {
-  background: transparent;
-  color: var(--ink-3);
-  border: var(--border);
-}
-
-.reset-btn.reset-btn-secondary:hover {
-  background: var(--mist-2);
-  color: var(--ink);
 }
 
 .filter-group {
@@ -293,9 +252,9 @@
 
 .filter-select {
   padding: 0.5rem 0.75rem;
-  border: var(--border);
+  border: var(--border-soft);
   border-radius: 9px;
-  background: var(--white);
+  background: var(--surface);
   cursor: pointer;
   font-size: 0.82rem;
   font-weight: 600;
@@ -304,27 +263,14 @@
 }
 
 .filter-select:hover {
-  border-color: var(--mist-3);
+  border-color: var(--border-strong);
 }
 
 .filter-select:focus {
   outline: none;
   border-color: var(--accent-dk);
   box-shadow: 0 0 0 3px rgba(142, 201, 27, 0.15);
-  background: var(--white);
-}
-
-.quick-filter {
-  padding: 0.5rem 1rem;
-  border: var(--border);
-  border-radius: 9px;
-  background: var(--white);
-  cursor: pointer;
-  font-size: 0.8rem;
-}
-
-.quick-filter:hover {
-  border-color: var(--mist-3);
+  background: var(--surface);
 }
 
 .active-sort-info {
@@ -345,21 +291,20 @@
   text-transform: capitalize;
 }
 
-
 @media (max-width: 768px) {
   .sorting-controls {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .sorting-group {
     justify-content: space-between;
   }
-  
+
   .sort-buttons {
     justify-content: center;
   }
-  
+
   .sort-btn {
     flex: 1;
     justify-content: center;
