@@ -1,0 +1,8 @@
+Highest spending category
+Works properly on different screen sizes
+Handles empty or no data cases gracefully
+
+optional: 
+Mock API integration
+Animations or transitions
+Export functionality (CSV/JSON)

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./TransactionForm.css";
 
 const INITIAL_FORM = {
@@ -27,33 +27,89 @@ export default function TransactionForm({
       : INITIAL_FORM;
 
   const [formData, setFormData] = useState(() => buildFormData(editingTx));
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
-    setFormData(prev => ({
+    let { name, value } = e.target;
+
+    // in amount section, remove everything except numbers and a single decimal point
+    if (name === "amount") {
+      value = value.replace(/,/g, "").replace(/\s/g, "");
+    }
+
+    // handle emojis in description
+    if (name === "description") {
+      const emojiRegex =
+        /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu;
+      value = value.replace(emojiRegex, "");
+    }
+
+    setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleCancel = () => {
+    setFormData(INITIAL_FORM);
+    setError("");
+    onCancelEdit?.();
+  };
 
+  // Sync form when entering/existing edit mode
+  useEffect(() => {
     if (editingTx) {
-      onUpdateTransaction?.({
+      setFormData({
         ...editingTx,
-        ...formData,
-        amount: Number(formData.amount),
+        amount: editingTx.amount?.toString() || "",
       });
+    } else {
+      setFormData(INITIAL_FORM);
+    }
+  }, [editingTx]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
+    // Numeric Validation
+    const cleanDescription = formData.description.trim();
+    const numericAmount = parseFloat(formData.amount);
+
+    if (isNaN(numericAmount) || numericAmount <= 0) {
+      setError("Please enter a valid amount greater than 0.");
+      setIsLoading(false);
       return;
     }
 
-    addTransaction({
-      ...formData,
-      id: Date.now(),
-      amount: Number(formData.amount),
-    });
+    if (new Date(formData.date) > new Date()) {
+      setError("Transaction date cannot be in future.");
+      setIsLoading(false);
+      return;
+    }
 
-    setFormData(INITIAL_FORM);
+    try {
+      const payload = { ...formData, description: cleanDescription, amount: numericAmount };
+
+      if (editingTx) {
+        await onUpdateTransaction?.({
+          ...editingTx,
+          ...payload,
+        });
+      } else {
+        addTransaction({
+          ...payload,
+          id: Date.now(),
+        });
+        setFormData(INITIAL_FORM);
+      }
+    } catch {
+      setError("Failed to save transaction.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -67,6 +123,11 @@ export default function TransactionForm({
       </div>
 
       <form onSubmit={handleSubmit} className="tx-form">
+        {error && (
+          <p className="error-message" style={{ color: "#ff4d4f" }}>
+            {error}
+          </p>
+        )}
         <label>
           Date
           <input
@@ -75,15 +136,19 @@ export default function TransactionForm({
             value={formData.date}
             onChange={handleChange}
             required
+            max={new Date().toISOString().split("T")[0]}
           />
         </label>
 
         <label>
           Amount
           <input
-            type="number"
+            type="text"
+            inputMode="decimal"
             name="amount"
-            placeholder="Amount"
+            step="0.01"
+            min="0.01"
+            placeholder="0.00"
             value={formData.amount}
             onChange={handleChange}
             required
@@ -98,7 +163,9 @@ export default function TransactionForm({
             onChange={handleChange}
             required
           >
-            <option value="">Select Category</option>
+            <option value="" disabled>
+              Select Category
+            </option>
             <option value="Food">Food</option>
             <option value="Travel">Travel</option>
             <option value="Shopping">Shopping</option>
@@ -127,16 +194,22 @@ export default function TransactionForm({
             placeholder="Description"
             value={formData.description}
             onChange={handleChange}
+            maxLength={100}
           />
         </label>
 
         <div className="tx-actions">
-          <button type="submit" className="primary-btn">
-            {editingTx ? "Update Transaction" : "Add Transaction"}
+          <button type="submit" className="primary-btn" disabled={isLoading}>
+            {isLoading ? "Saving..." : editingTx ? "Update" : "Add"}
           </button>
           {editingTx && (
-            <button type="button" className="ghost-btn" onClick={onCancelEdit}>
-              Cancel Edit
+            <button
+              type="button"
+              className="ghost-btn"
+              onClick={handleCancel}
+              disabled={isLoading}
+            >
+              Cancel
             </button>
           )}
         </div>
