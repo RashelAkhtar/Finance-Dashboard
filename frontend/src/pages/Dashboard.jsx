@@ -25,6 +25,7 @@ export default function Dashboard() {
   const [transaction, setTransaction] = useState(loadTransactions);
   const [editingTx, setEditingTx] = useState(null);
   const [role, setRole] = useState(() => localStorage.getItem("userRole"));
+  const [toast, setToast] = useState(null);
   const [theme, setTheme] = useState(
     () => localStorage.getItem("theme") ?? "light",
   );
@@ -42,11 +43,32 @@ export default function Dashboard() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const addTransaction = (tx) => setTransaction((prev) => [...prev, tx]);
+  const dismissToast = () => {
+    setToast((prev) => (prev ? { ...prev, closing: true } : prev));
+    window.setTimeout(() => setToast(null), 200);
+  };
+
+  useEffect(() => {
+    if (!toast || toast.closing) return undefined;
+    const timeout = window.setTimeout(() => {
+      dismissToast();
+    }, 2500);
+    return () => window.clearTimeout(timeout);
+  }, [toast]);
+
+  const showToast = (message, tone = "success") => {
+    setToast({ message, tone, closing: false, id: Date.now() });
+  };
+
+  const addTransaction = (tx) => {
+    setTransaction((prev) => [...prev, tx]);
+    showToast("Transaction added.");
+  };
 
   const deleteTransaction = (id) => {
     setTransaction((prev) => prev.filter((tx) => tx.id !== id));
     if (editingTx?.id === id) setEditingTx(null);
+    showToast("Transaction deleted.", "danger");
   };
 
   const startEdit = (tx) => setEditingTx(tx);
@@ -56,6 +78,7 @@ export default function Dashboard() {
       prev.map((tx) => (tx.id === updatedTx.id ? updatedTx : tx)),
     );
     setEditingTx(null);
+    showToast("Transaction updated.");
   };
 
   if (!role) return null;
@@ -125,6 +148,24 @@ export default function Dashboard() {
           onEdit={role === "admin" ? startEdit : undefined}
           onDelete={role === "admin" ? deleteTransaction : undefined}
         />
+
+        {toast && (
+          <div className="toast-stack">
+            <div
+              className={`toast ${toast.tone} ${toast.closing ? "closing" : ""}`}
+            >
+              <span>{toast.message}</span>
+              <button
+                type="button"
+                className="toast-close"
+                onClick={dismissToast}
+                aria-label="Dismiss notification"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );

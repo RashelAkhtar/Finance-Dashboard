@@ -19,9 +19,9 @@ function Header({
         type="button"
         className="app-header-logo"
         onClick={() => navigate("/")}
-        aria-label="FinForge, go to home"
+        aria-label="Zorvyn, go to home"
       >
-        FinForge
+        Zorvyn
       </button>
 
       <nav className="app-header-center" aria-label="Page shortcuts">

@@ -249,6 +249,119 @@
   transform: translateY(-1px);
 }
 
+.export-btn {
+  padding: 0.5rem 0.9rem;
+  background: var(--surface);
+  color: var(--ink-2);
+  border: var(--border-soft);
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: all var(--t);
+}
+
+.export-btn:hover {
+  background: var(--surface-3);
+  border-color: var(--border-strong);
+  color: var(--ink);
+}
+
+.download-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 14, 22, 0.45);
+  display: grid;
+  place-items: center;
+  z-index: 300;
+  animation: downloadFadeIn 0.2s ease forwards;
+}
+
+.download-overlay.closing {
+  animation: downloadFadeOut 0.2s ease forwards;
+}
+
+.download-modal {
+  background: var(--surface);
+  border: var(--border-soft);
+  border-radius: 16px;
+  padding: 20px 22px;
+  width: min(420px, 92vw);
+  box-shadow: var(--shadow-md);
+  animation: downloadPopIn 0.2s ease forwards;
+}
+
+.download-modal.closing {
+  animation: downloadPopOut 0.2s ease forwards;
+}
+
+.download-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.download-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.68rem;
+  color: var(--accent-dk);
+  margin: 0 0 6px;
+}
+
+.download-head h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--ink);
+}
+
+.download-close {
+  border: var(--border-soft);
+  background: var(--surface-2);
+  color: var(--ink-2);
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all var(--t);
+}
+
+.download-close:hover {
+  background: var(--surface-3);
+  border-color: var(--border-strong);
+  color: var(--ink);
+}
+
+.download-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+@keyframes downloadFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes downloadFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes downloadPopIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes downloadPopOut {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(6px) scale(0.98); }
+}
+
 .filter-group {
   display: flex;
   align-items: center;

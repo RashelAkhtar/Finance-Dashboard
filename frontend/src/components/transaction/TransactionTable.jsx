@@ -5,6 +5,8 @@ export default function TransactionTable({ transactions, onEdit, onDelete }) {
   const [sortBy, setSortBy] = useState("date"); // Default sorting by Date
   const [sortOrder, setSortOrder] = useState("asc"); // Default ascending order
   const [categoryFilter, setCategoryFilter] = useState("all");
+  const [downloadWindow, setDownloadWindow] = useState(false);
+  const [downloadClosing, setDownloadClosing] = useState(false);
 
   const sortOptions = [
     { key: "date", label: "Date", icon: "📅" },
@@ -32,10 +34,22 @@ export default function TransactionTable({ transactions, onEdit, onDelete }) {
       const num = Number(raw);
       return Number.isNaN(num) ? 0 : num;
     }
+    if (key === "type") {
+      if (raw === "income") return 0;
+      if (raw === "expense") return 1;
+      return 2;
+    }
     if (raw == null) {
       return "";
     }
     return String(raw).toLowerCase();
+  };
+
+  const getSortLabel = () => {
+    if (sortBy === "type") {
+      return sortOrder === "asc" ? "Income first" : "Expense first";
+    }
+    return sortOrder === "asc" ? "Ascending" : "Descending";
   };
 
   const categories = Array.from(
@@ -65,6 +79,81 @@ export default function TransactionTable({ transactions, onEdit, onDelete }) {
     setSortBy("date");
     setSortOrder("asc");
     setCategoryFilter("all");
+  };
+
+  const openDownload = () => {
+    setDownloadClosing(false);
+    setDownloadWindow(true);
+  };
+
+  const closeDownload = () => {
+    setDownloadClosing(true);
+    window.setTimeout(() => {
+      setDownloadWindow(false);
+      setDownloadClosing(false);
+    }, 200);
+  };
+
+  // Download data
+  const downloadFile = (content, filename, type) => {
+    const blob = new Blob([content], { type });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleExportJSON = () => {
+    const payload = sortedData.map((tx) => ({
+      id: tx.id,
+      date: tx.date,
+      amount: tx.amount,
+      category: tx.category,
+      type: tx.type,
+      description: tx.description,
+    }));
+    downloadFile(
+      JSON.stringify(payload, null, 2),
+      "transactions.json",
+      "application/json",
+    );
+  };
+
+  const toCsvValue = (value) => {
+    const str = value == null ? "" : String(value);
+    if (/[",\n]/.test(str)) {
+      return `"${str.replace(/"/g, '""')}"`;
+    }
+    return str;
+  };
+
+  const handleExportCSV = () => {
+    const headers = [
+      "id",
+      "date",
+      "amount",
+      "category",
+      "type",
+      "description",
+    ];
+    const rows = sortedData.map((tx) =>
+      [
+        tx.id,
+        tx.date,
+        tx.amount,
+        tx.category,
+        tx.type,
+        tx.description,
+      ]
+        .map(toCsvValue)
+        .join(","),
+    );
+    const csv = [headers.join(","), ...rows].join("\n");
+    downloadFile(csv, "transactions.csv", "text/csv");
   };
 
   if (!transactions.length) {
@@ -104,7 +193,13 @@ export default function TransactionTable({ transactions, onEdit, onDelete }) {
                 {option.label}
                 {sortBy === option.key && (
                   <span className="sort-direction">
-                    {sortOrder === "asc" ? "↑" : "↓"}
+                    {option.key === "type"
+                      ? sortOrder === "asc"
+                        ? "(Income)"
+                        : "(Expense)"
+                      : sortOrder === "asc"
+                        ? "↑"
+                        : "↓"}
                   </span>
                 )}
               </button>
@@ -141,14 +236,22 @@ export default function TransactionTable({ transactions, onEdit, onDelete }) {
           >
             🔄 Reset
           </button>
+
+          <button
+            onClick={openDownload}
+            className="export-btn"
+            title="Download"
+          >
+            ⤓ Download
+          </button>
         </div>
       </div>
 
       {/* Active sort indicator */}
       <div className="active-sort-info">
         <span className="info-badge">
-          Currently sorted by: <strong>{sortBy}</strong>(
-          {sortOrder === "asc" ? "Ascending" : "Descending"}) | Category:{" "}
+          Currently sorted by: <strong>{sortBy}</strong> ({getSortLabel()}) |
+          Category:{" "}
           <strong>{categoryFilter === "all" ? "All" : categoryFilter}</strong>
         </span>
       </div>
@@ -205,6 +308,53 @@ export default function TransactionTable({ transactions, onEdit, onDelete }) {
           </tbody>
         </table>
       </div>
+
+      {downloadWindow && (
+        <div
+          className={`download-overlay ${downloadClosing ? "closing" : ""}`}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className={`download-modal ${downloadClosing ? "closing" : ""}`}>
+            <div className="download-head">
+              <div>
+                <p className="download-kicker">Export</p>
+                <h4>Download transactions</h4>
+              </div>
+              <button
+                type="button"
+                className="download-close"
+                onClick={closeDownload}
+                aria-label="Close download window"
+              >
+                ×
+              </button>
+            </div>
+            <div className="download-actions">
+              <button
+                onClick={() => {
+                  handleExportCSV();
+                  closeDownload();
+                }}
+                className="export-btn"
+                title="Export CSV"
+              >
+                ⤓ CSV
+              </button>
+              <button
+                onClick={() => {
+                  handleExportJSON();
+                  closeDownload();
+                }}
+                className="export-btn"
+                title="Export JSON"
+              >
+                ⤓ JSON
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
