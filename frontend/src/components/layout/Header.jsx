@@ -1,8 +1,8 @@
-import {useNavigate} from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom";
 
 import "./Header.css";
 
-export default function Header({
+function Header({
   theme,
   onToggleTheme,
   primaryActionLabel,
@@ -10,18 +10,45 @@ export default function Header({
   rightSlot,
 }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   return (
     <header className="app-header">
-      <div className="app-header-logo-wrap">
-        <span className="app-header-logo" onClick={() => navigate("/")}>Zorvyn</span>
-      </div>
+      <button
+        type="button"
+        className="app-header-logo"
+        onClick={() => navigate("/")}
+        aria-label="FinForge, go to home"
+      >
+        FinForge
+      </button>
+
+      <nav className="app-header-center" aria-label="Page shortcuts">
+        {isHome ? (
+          <button
+            type="button"
+            className="app-header-text-link"
+            onClick={() => navigate("/dashboard")}
+          >
+            Dashboard
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="app-header-text-link"
+            onClick={() => navigate("/")}
+          >
+            Home
+          </button>
+        )}
+      </nav>
 
       <div className="app-header-actions">
         {rightSlot}
 
         <button type="button" className="app-header-toggle" onClick={onToggleTheme}>
-          {theme === "light" ? "Dark mode" : "Light mode"}
+          {theme === "light" ? "Dark" : "Light"}
         </button>
 
         {primaryActionLabel && onPrimaryAction && (
@@ -33,3 +60,5 @@ export default function Header({
     </header>
   );
 }
+
+export default Header;

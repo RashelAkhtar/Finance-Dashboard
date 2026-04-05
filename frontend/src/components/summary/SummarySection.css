@@ -6,6 +6,12 @@
   box-shadow: var(--shadow-sm);
   display: grid;
   gap: 16px;
+  transition: box-shadow var(--t), border-color var(--t);
+}
+
+.summary-section:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--mist-3);
 }
 
 .summary-header {

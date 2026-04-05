@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/layout/Header";
-import "../styles/HomePage.css";
 
 export default function HomePage() {
   const [showRoleSelector, setShowRoleSelector] = useState(false);

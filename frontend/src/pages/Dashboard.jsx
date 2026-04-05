@@ -88,47 +88,44 @@ export default function Dashboard() {
         }
       />
 
-      {/* ── Page heading ── */}
-      <header className="dash-header">
-        <div>
-          <p className="dash-kicker">Finance command center</p>
-          <h1>Welcome back.</h1>
-          <p className="dash-sub">
-            Keep cashflow clean, organized, and future-ready with quick
-            insights.
-          </p>
+      <main className="dash-main">
+        <header className="dash-header">
+          <div>
+            <p className="dash-kicker">Finance command center</p>
+            <h1>Welcome back.</h1>
+            <p className="dash-sub">
+              Keep cashflow clean, organized, and future-ready with quick
+              insights.
+            </p>
+          </div>
+        </header>
+
+        <div className="dash-grid">
+          <SummarySection transactions={transaction} />
+          <SpendingChart transactions={transaction} />
         </div>
-      </header>
 
-      {/* ── Summary + Spending chart ── */}
-      <div className="dash-grid">
-        <SummarySection transactions={transaction} />
-        <SpendingChart transactions={transaction} />
-      </div>
+        <div className="dash-grid">
+          <MonthlyChart transactions={transaction} />
+          <InsightsSection transactions={transaction} />
+        </div>
 
-      {/* ── Monthly chart + Insights ── */}
-      <div className="dash-grid">
-        <MonthlyChart transactions={transaction} />
-        <InsightsSection transactions={transaction} />
-      </div>
+        {role === "admin" && (
+          <TransactionForm
+            key={editingTx?.id ?? "new"}
+            addTransaction={addTransaction}
+            editingTx={editingTx}
+            onUpdateTransaction={updateTransaction}
+            onCancelEdit={() => setEditingTx(null)}
+          />
+        )}
 
-      {/* ── Transaction form (admin only) ── */}
-      {role === "admin" && (
-        <TransactionForm
-          key={editingTx?.id ?? "new"}
-          addTransaction={addTransaction}
-          editingTx={editingTx}
-          onUpdateTransaction={updateTransaction}
-          onCancelEdit={() => setEditingTx(null)}
+        <TransactionTable
+          transactions={transaction}
+          onEdit={role === "admin" ? startEdit : undefined}
+          onDelete={role === "admin" ? deleteTransaction : undefined}
         />
-      )}
-
-      {/* ── Transaction table ── */}
-      <TransactionTable
-        transactions={transaction}
-        onEdit={role === "admin" ? startEdit : undefined}
-        onDelete={role === "admin" ? deleteTransaction : undefined}
-      />
+      </main>
     </div>
   );
 }

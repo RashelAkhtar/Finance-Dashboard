@@ -1,40 +1,69 @@
-/* ── App header ───────────────────────────────────────── */
 .app-header {
   background: color-mix(in srgb, var(--surface) 92%, transparent);
   border-bottom: var(--border-soft);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   padding: 0 48px;
-  height: 62px;
+  min-height: 62px;
   position: sticky;
   top: 0;
   z-index: 200;
   backdrop-filter: blur(12px);
-  animation: fadeIn .4s var(--ease) both;
+  animation: fadeIn 0.4s var(--ease) both;
 }
 
-.app-header-logo-wrap {
+.app-header-center {
+  flex: 1;
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 8px;
+}
+
+.app-header-text-link {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-3);
+  background: transparent;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: color var(--t), background var(--t);
+}
+
+.app-header-text-link:hover {
+  color: var(--ink);
+  background: var(--surface-2);
+}
+
+.app-header-text-link:focus-visible {
+  outline: 2px solid var(--accent-dk);
+  outline-offset: 2px;
 }
 
 .app-header-logo {
   font-family: var(--font-sans);
-  font-size: .92rem;
+  font-size: 0.92rem;
   font-weight: 700;
   color: var(--ink);
-  letter-spacing: -.01em;
-  display: flex;
+  letter-spacing: -0.01em;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
   cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
-/* Logo mark — a small geometric badge */
 .app-header-logo::before {
-  content: '◈';
+  content: "◈";
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -43,20 +72,26 @@
   background: var(--ink);
   color: var(--accent);
   border-radius: 8px;
-  font-size: .9rem;
+  font-size: 0.9rem;
   line-height: 1;
+}
+
+.app-header-logo:focus-visible {
+  outline: 2px solid var(--accent-dk);
+  outline-offset: 4px;
+  border-radius: 4px;
 }
 
 .app-header-actions {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
 }
 
-/* Theme toggle */
 .app-header-toggle {
   font-family: var(--font-sans);
-  font-size: .76rem;
+  font-size: 0.76rem;
   font-weight: 500;
   padding: 7px 14px;
   background: var(--surface-2);
@@ -64,16 +99,16 @@
   border-radius: 8px;
   color: var(--ink-3);
   cursor: pointer;
-  letter-spacing: .03em;
-  transition: all var(--t) var(--ease);
-  display: flex;
+  letter-spacing: 0.03em;
+  transition: background var(--t), color var(--t), border-color var(--t);
+  display: inline-flex;
   align-items: center;
   gap: 6px;
 }
 
 .app-header-toggle::before {
-  content: '◐';
-  font-size: .8rem;
+  content: "◐";
+  font-size: 0.8rem;
 }
 
 .app-header-toggle:hover {
@@ -82,10 +117,14 @@
   border-color: var(--border-strong);
 }
 
-/* Primary CTA in header */
+.app-header-toggle:focus-visible {
+  outline: 2px solid var(--accent-dk);
+  outline-offset: 2px;
+}
+
 .app-header-primary {
   font-family: var(--font-sans);
-  font-size: .82rem;
+  font-size: 0.82rem;
   font-weight: 600;
   padding: 8px 20px;
   background: var(--primary-bg);
@@ -93,22 +132,31 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  letter-spacing: .02em;
+  letter-spacing: 0.02em;
   transition: background var(--t), transform var(--t), box-shadow var(--t);
 }
 
 .app-header-primary:hover {
   background: var(--primary-bg-hover);
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(15,17,23,.16);
+  box-shadow: 0 6px 18px rgba(15, 17, 23, 0.16);
 }
 
-/* Divider pipe between slots */
-.app-header-actions > *:not(:first-child):not(:last-child) {
-  position: relative;
+.app-header-primary:focus-visible {
+  outline: 2px solid var(--accent-dk);
+  outline-offset: 2px;
 }
 
 @media (max-width: 640px) {
-  .app-header { padding: 0 20px; }
-  .app-header-toggle span { display: none; }
+  .app-header {
+    padding: 10px 20px;
+    flex-wrap: wrap;
+    min-height: auto;
+  }
+
+  .app-header-center {
+    order: 3;
+    flex: 1 1 100%;
+    justify-content: flex-start;
+  }
 }

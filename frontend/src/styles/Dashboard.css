@@ -1,20 +1,33 @@
-/* Dashboard.css — uses tokens from HomePage.css */
+/* Dashboard — tokens from HomePage.css (loaded in main.jsx) */
 
-/* ── Page shell ───────────────────────────────────────── */
 .dashboard-page {
   min-height: 100vh;
-  background: linear-gradient(180deg, var(--surface) 0%, var(--mist) 45%, var(--mist-2) 100%);
   display: flex;
   flex-direction: column;
+  background: linear-gradient(
+    180deg,
+    var(--surface) 0%,
+    var(--mist) 42%,
+    var(--mist-2) 100%
+  );
+  color: var(--ink);
 }
 
-/* ── Dash header ──────────────────────────────────────── */
-.dash-header {
+.dash-main {
+  flex: 1;
+  width: 100%;
   max-width: 1280px;
   margin: 0 auto;
+  padding: 0 48px 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dash-header {
+  padding-top: 28px;
   width: 100%;
-  padding: 48px 48px 0;
-  animation: fadeUp .6s var(--ease) both;
+  animation: fadeUp 0.6s var(--ease) both;
 }
 
 .dash-kicker {
@@ -47,42 +60,41 @@
 }
 
 .dash-sub {
-  font-size: .9rem;
+  font-size: 0.92rem;
   color: var(--ink-3);
   line-height: 1.65;
   max-width: 520px;
 }
 
-/* ── Dash inner grid ──────────────────────────────────── */
 .dash-grid {
-  max-width: 1280px;
-  margin: 36px auto 0;
-  width: 100%;
-  padding: 0 48px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
-  animation: fadeUp .6s var(--ease) .1s both;
-}
-
-/* charts and other sections outside dash-grid */
-.dash-grid + * {
-  max-width: 1280px;
-  margin: 20px auto 0;
   width: 100%;
-  padding: 0 48px;
-  animation: fadeUp .6s var(--ease) .18s both;
+  animation: fadeUp 0.6s var(--ease) both;
 }
 
-.dash-grid + * + * {
-  animation-delay: .26s;
+.dash-grid:nth-of-type(1) {
+  animation-delay: 0.04s;
 }
 
-.dash-grid + * + * + * {
-  animation-delay: .34s;
+.dash-grid:nth-of-type(2) {
+  animation-delay: 0.08s;
 }
 
-/* ── Role switch ──────────────────────────────────────── */
+.dash-main > .tx-form-card,
+.dash-main > .tx-table-card {
+  animation: fadeUp 0.55s var(--ease) both;
+}
+
+.dash-main > .tx-form-card {
+  animation-delay: 0.1s;
+}
+
+.dash-main > .tx-table-card {
+  animation-delay: 0.14s;
+}
+
 .role-switch {
   display: flex;
   align-items: center;
@@ -115,22 +127,37 @@
   outline: none;
 }
 
-.role-switch select:focus {
+.role-switch select:focus-visible {
   border-color: var(--accent-dk);
-  box-shadow: 0 0 0 3px rgba(142,201,27,.15);
+  box-shadow: 0 0 0 3px rgba(142, 201, 27, 0.2);
 }
 
-/* ── Responsive ───────────────────────────────────────── */
 @media (max-width: 1024px) {
-  .dash-grid { grid-template-columns: 1fr; }
+  .dash-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {
+  .dash-main {
+    padding: 0 20px 44px;
+    gap: 20px;
+  }
+
+  .dash-header {
+    padding-top: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
   .dash-header,
   .dash-grid,
-  .dash-grid + *,
-  .dash-grid + * + * {
-    padding-left: 20px;
-    padding-right: 20px;
+  .dash-main > .tx-form-card,
+  .dash-main > .tx-table-card {
+    animation: none;
+  }
+
+  .dash-kicker::before {
+    animation: none;
   }
 }
