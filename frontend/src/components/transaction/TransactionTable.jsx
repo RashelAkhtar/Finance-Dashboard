@@ -314,6 +314,11 @@ export default function TransactionTable({ transactions, onEdit, onDelete }) {
           className={`download-overlay ${downloadClosing ? "closing" : ""}`}
           role="dialog"
           aria-modal="true"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              closeDownload();
+            }
+          }}
         >
           <div className={`download-modal ${downloadClosing ? "closing" : ""}`}>
             <div className="download-head">
